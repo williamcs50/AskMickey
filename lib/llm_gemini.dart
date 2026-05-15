@@ -23,10 +23,25 @@ It also includes configuration classes for API and generation options.
 
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
+
+
 class ApiConfig {
-  static const String apiKey = 'YOUR_GEMINI_API_KEY_HERE';
+  static String get apiKey {
+    final key = dotenv.env['GEMINI_API_KEY'];
+    
+    if (key == null || key.isEmpty || key == 'your_actual_api_key_here') {
+      throw Exception(
+        'Error: GEMINI_API_KEY is missing!\n'
+        '1. Copy .env.example to .env\n'
+        '2. Put your real key from https://aistudio.google.com/app/apikey\n'
+        '3. Restart the app',
+      );
+    }
+    return key;
+  }
 }
 
 class GenerationOptions {
@@ -61,7 +76,7 @@ class GeminiService {
 
   GeminiService._internal()
       : _model = GenerativeModel(
-    model: 'gemini-1.5-flash-latest',
+    model: 'gemini-2.5-flash',
     apiKey: ApiConfig.apiKey,
   );
 

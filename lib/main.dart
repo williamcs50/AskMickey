@@ -29,13 +29,18 @@ import 'welcome_screen.dart'; // Welcome screen widget
 import 'main_conversation_screen.dart'; // Main conversation screen widget
 import 'browser_screen.dart'; // Browser screen widget
 import 'map_screen.dart'; // Map screen widget
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 // Define a constant string for the app title
 const String appTitle = 'AskMickey';
 
 // Main entry point of the app
-void main() {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter is initialized
+
+  // Load the .env file BEFORE the app starts
+  await dotenv.load(fileName: ".env");
+
   runApp(const AskMickeyApp()); // Run the main app widget
 }
 
