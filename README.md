@@ -1,47 +1,67 @@
 # AskMickey
 
 ## Overview
-AskMickey is a conversational AI assistant for Walt Disney World guests that delivers real-time help with park navigation, attractions, dining, wait times, and more.
 
+AskMickey is a Flutter app that implements a classify-then-route pattern on top of Gemini for Walt Disney World guests. Every query is classified first, then routed to a dedicated handler that assembles a domain-specific prompt with injected context before any LLM call occurs. Safety handlers for inappropriate or off-topic input are triggered at classification time. The current release is an EPCOT-only MVP.
 
 ## Demo
+
 [![AskMickey Demo](https://img.youtube.com/vi/tvfP0SIrxjA/maxresdefault.jpg)](https://www.youtube.com/watch?v=tvfP0SIrxjA)
 
 ## Features
-- Intelligent conversational AI assistant for Walt Disney World
-- Real-time attraction info, wait times, dining options, and weather
-- Saves parking location
-- Navigation helper
-- Fun Disney facts and trivia
+
+### Classification and Routing
+- Gemini classifies every incoming query into a fixed set of categories before any generative call is made
+- Routes to specialized handlers: `AttractionInfo`, `Dining`/`Menu`, `Weather`, `Maps`, `AttractionQueue`, `FunFacts`, `ParkingLocation`, `ConversationContinuation`
+- Explicit fallback categories (`InappropriatePrompt`, `NotDisneyRelated`, `IndeterminateCategory`) short-circuit unsafe or off-domain queries
+
+### Data Retrieval and Prompt Pipelines
+- Real-time data (wait times, weather, dining options) is fetched and injected into handler-specific prompts
+- Static data (parking locations, navigation helpers, Disney facts) is supplied through the same prompt-construction step
+- Each handler builds its own constrained prompt, calls `GeminiService`, and returns a `PromptResult`
+
+### Safety and Domain Constraints
+- Early classification plus per-handler prompt engineering keeps Gemini inside the Walt Disney World domain
+- Dedicated safety paths prevent the model from answering inappropriate or unrelated questions
+
+### Conversation and Presentation
+- Stateful conversation handling supports follow-up questions within the same intent
 - Animated Mickey-themed UI with starry background
 
 ## Getting Started
 1. Clone the repository
+
 ```bash
 git clone https://github.com/williamcs50/AskMickey.git
 cd AskMickey
 ```
 2. Set up your Gemini API key
+
 ```bash
 cp .env.example .env
 ```
+
 Edit .env and add your key:
+
 ```bash
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 3. Install dependencies
+
 ```bash
 flutter pub get
 ```
 4. Run the app
+
 ```bash
 flutter run
 ```
+
 ### Platform Support
 Tested on iOS, macOS, and web. Other Flutter targets (Android, Windows, Linux) are untested.
 
 ## Architecture
-AskMickey uses a lightweight classify-then-route pattern with Gemini to deliver accurate and reliable responses.
+AskMickey uses a lightweight classify-then-route pattern powered by Gemini. Queries are classified first, then routed into dedicated handlers that assemble constrained, domain-specific prompts before any model call is made.
 
 ### Query Classification and Routing
 Gemini classifies each query into a category. The app then routes it to the appropriate handler:
@@ -59,17 +79,17 @@ Gemini classifies each query into a category. The app then routes it to the appr
 Each handler retrieves relevant data from static constants or external APIs, builds a domain-specific prompt, calls `GeminiService`, and returns a `PromptResult`. `MainConversationScreen` then updates the UI.
 
 ### Constraining Gemini
-
 Gemini is kept on-domain through early classification, domain-specific prompts with injected context, and dedicated safety handlers for inappropriate or off-topic queries.
 
 ## Project Status
-**MVP EPCOT Only**
+**MVP – EPCOT Only**
 
 Flutter app with Gemini integration, built for EPCOT.
 
-Core features are implemented:
-- Intelligent conversation routing
-- Attractions, wait times, dining, menus, parking, navigation, weather, and fun facts
+Core capabilities implemented:
+- Query classification and routing to intent-specific handlers before any LLM generation
+- Real-time and static data retrieval through modular prompt pipelines
+- Safety handlers and domain constraints
 - Modular structure for adding other parks later
 
 Functional but early stage.
