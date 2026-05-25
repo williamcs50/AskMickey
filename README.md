@@ -8,6 +8,10 @@ For technical depth on the system's architecture, see [ARCHITECTURE.md](./ARCHIT
 
 **Build mode.** Architecture, code, and prompt design by me. This project predates my current AI-assisted workflow. It shows what I produce solo.
 
+## Why this project
+
+Generic LLM assistants are powerful but unreliable for domain-specific use. A guest at Walt Disney World asking "where's the nearest restroom" needs an answer grounded in real park data, not a confident hallucination. I wanted to see how far structured prompt engineering and classify-then-route architecture could push an LLM toward reliability inside a single domain. AskMickey is the answer for EPCOT. The same pattern would generalize to any domain where guardrails and grounding matter more than open-ended generation.
+
 ## Demo
 
 [![AskMickey Demo](https://img.youtube.com/vi/tvfP0SIrxjA/maxresdefault.jpg)](https://www.youtube.com/watch?v=tvfP0SIrxjA)
