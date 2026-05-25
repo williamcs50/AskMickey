@@ -12,6 +12,17 @@ For technical depth on the system's architecture, see [ARCHITECTURE.md](./ARCHIT
 
 [![AskMickey Demo](https://img.youtube.com/vi/tvfP0SIrxjA/maxresdefault.jpg)](https://www.youtube.com/watch?v=tvfP0SIrxjA)
 
+## Screenshots
+
+| Home | Attraction Info | Dining |
+|---|---|---|
+| ![Home screen](./assets/home.png) | ![Attraction info handler](./assets/attraction.png) | ![Dining handler](./assets/dining.png) |
+
+| Maps Query | Restroom Query | Weather |
+|---|---|---|
+| ![Maps handler with walking route](./assets/maps.png) | ![Nearest restroom query](./assets/nearest_restroom.png) | ![Weather handler](./assets/weather.png) |
+
+
 ## Features
 
 ### Classification and Routing
