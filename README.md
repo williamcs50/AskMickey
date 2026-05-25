@@ -6,6 +6,8 @@ AskMickey is a Flutter app that implements a classify-then-route pattern on top 
 
 For technical depth on the system's architecture, see [ARCHITECTURE.md](./ARCHITECTURE.md).
 
+**Build mode.** Architecture, code, and prompt design by me. This project predates my current AI-assisted workflow. It shows what I produce solo.
+
 ## Demo
 
 [![AskMickey Demo](https://img.youtube.com/vi/tvfP0SIrxjA/maxresdefault.jpg)](https://www.youtube.com/watch?v=tvfP0SIrxjA)
